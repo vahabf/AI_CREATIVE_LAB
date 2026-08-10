@@ -1,0 +1,23 @@
+[
+    {
+        "name": "AI Creative Automation Service",
+        "income_speed": 8,
+        "scalability": 9,
+        "skill_alignment": 9,
+        "ai_resistance": 7
+    },
+    {
+        "name": "3D Digital Asset Store",
+        "income_speed": 5,
+        "scalability": 8,
+        "skill_alignment": 10,
+        "ai_resistance": 6
+    },
+    {
+        "name": "AI Music Production",
+        "income_speed": 4,
+        "scalability": 8,
+        "skill_alignment": 8,
+        "ai_resistance": 7
+    }
+]
