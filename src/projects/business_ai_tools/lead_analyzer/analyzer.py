@@ -1,79 +1,82 @@
+from .models import Lead
+
+
 class LeadAnalyzer:
-    def __init__(self):
-        self.services = {
+
+    def analyze(self, lead: Lead):
+
+        service = self.detect_service(lead.message)
+
+        score = self.calculate_score(
+            lead.budget,
+            lead.deadline,
+            service
+        )
+
+        return {
+            "client": lead.name,
+            "service": service,
+            "lead_score": score,
+            "priority": self.priority(score),
+            "recommended_action": self.action(score)
+        }
+
+
+    def detect_service(self, message):
+
+        text = message.lower()
+
+        services = {
             "3d": "3D Design",
-            "animation": "Animation",
+            "animation": "3D Animation",
             "video": "Video Production",
-            "website": "Web Development",
             "automation": "AI Automation",
-            "ai": "AI Service",
+            "website": "Web Development",
             "music": "Music Production"
         }
 
-    def analyze(self, message):
-        text = message.lower()
+        for key, value in services.items():
 
-        detected_service = "Unknown"
-        category = "General"
+            if key in text:
+                return value
 
-        for keyword, service in self.services.items():
-            if keyword in text:
-                detected_service = service
-                break
-
-        if detected_service in [
-            "3D Design",
-            "Animation",
-            "Video Production",
-            "Music Production"
-        ]:
-            category = "Creative"
-
-        elif detected_service in [
-            "AI Automation",
-            "AI Service",
-            "Web Development"
-        ]:
-            category = "Technology"
-
-        result = {
-            "message": message,
-            "service": detected_service,
-            "category": category,
-            "priority": self.calculate_priority(text),
-            "estimated_value": self.estimate_value(detected_service)
-        }
-
-        return result
+        return "Unknown"
 
 
-    def calculate_priority(self, text):
+    def calculate_score(self, budget, deadline, service):
 
-        high_words = [
-            "urgent",
-            "asap",
-            "quick",
-            "deadline"
-        ]
-
-        for word in high_words:
-            if word in text:
-                return "high"
-
-        return "medium"
+        score = 50
 
 
-    def estimate_value(self, service):
+        if "$" in budget:
+            score += 20
 
-        values = {
-            "AI Automation": "$500-$3000",
-            "AI Service": "$200-$2000",
-            "3D Design": "$100-$1000",
-            "Animation": "$300-$3000",
-            "Video Production": "$200-$2000",
-            "Web Development": "$500-$5000",
-            "Music Production": "$100-$1000",
-            "Unknown": "Need evaluation"
-        }
 
-        return values.get(service, "Need evaluation")
+        if "week" in deadline.lower():
+            score += 15
+
+
+        if service != "Unknown":
+            score += 15
+
+
+        return min(score, 100)
+
+
+    def priority(self, score):
+
+        if score >= 80:
+            return "High"
+
+        if score >= 60:
+            return "Medium"
+
+        return "Low"
+
+
+    def action(self, score):
+
+        if score >= 80:
+            return "Send proposal immediately"
+
+        return "Review manually"
