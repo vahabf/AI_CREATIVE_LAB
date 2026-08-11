@@ -1,20 +1,22 @@
-from analyzer import LeadAnalyzer
+from projects.business_ai_tools.lead_analyzer.analyzer import LeadAnalyzer
+from projects.business_ai_tools.lead_analyzer.models import Lead
+
+
+lead = Lead(
+    name="Luxury Furniture Co",
+    message="Need a 3D product animation for our furniture line",
+    budget="$2000",
+    deadline="3 weeks"
+)
 
 
 analyzer = LeadAnalyzer()
 
 
-test_message = """
-I need a 3D product animation
-for my furniture company.
-Deadline is next month.
-"""
+result = analyzer.analyze(lead)
 
 
-result = analyzer.analyze(test_message)
-
-
-print("Lead Analysis")
+print("🌌 Lead Analysis")
 print("----------------")
 
 for key, value in result.items():
