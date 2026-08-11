@@ -7,5 +7,10 @@ results = runner.run(
     "src/projects/business_ai_tools/lead_analyzer/data/leads.json"
 )
 
-for item in results:
-    print(item)
+
+print("🌌 Batch Lead Analysis")
+
+for result in results:
+
+    print("----------------")
+    print(result)
