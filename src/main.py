@@ -11,7 +11,7 @@ def main():
 
     engine = ExecutionEngine()
 
-    result = engine.run("first_test")
+    result = engine.run("lead_analysis")
 
     log(f"Engine result: {result}")
 
