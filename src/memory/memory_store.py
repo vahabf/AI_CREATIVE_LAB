@@ -1,35 +1,39 @@
 import json
+import os
 from datetime import datetime
-from pathlib import Path
 
 
 class MemoryStore:
-    def __init__(self):
-        self.file_path = Path("src/memory/execution_history.json")
 
-    def save(self, task, status, result=None):
-        history = self.load()
+    def __init__(self):
+        self.file = "src/memory/execution_history.json"
+
+
+    def save(self, task_name, result):
+
+        if os.path.exists(self.file):
+
+            with open(self.file, "r") as f:
+                history = json.load(f)
+
+        else:
+            history = []
+
 
         entry = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "task": task,
-            "status": status,
-            "result": result
+            "task": task_name,
+            "status": result.get("status"),
+            "result": result.get("output")
         }
+
 
         history.append(entry)
 
-        with open(self.file_path, "w", encoding="utf-8") as file:
-            json.dump(history, file, indent=4, ensure_ascii=False)
 
-        return entry
-
-    def load(self):
-        if not self.file_path.exists():
-            return []
-
-        if self.file_path.stat().st_size == 0:
-            return []
-
-        with open(self.file_path, "r", encoding="utf-8") as file:
-            return json.load(file)
+        with open(self.file, "w") as f:
+            json.dump(
+                history,
+                f,
+                indent=4
+            )
