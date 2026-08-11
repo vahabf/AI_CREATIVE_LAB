@@ -1,4 +1,5 @@
 from .models import Lead
+from .report import LeadReport
 
 
 class LeadAnalyzer:
@@ -13,13 +14,21 @@ class LeadAnalyzer:
             service
         )
 
-        return {
+        analysis = {
             "client": lead.name,
             "service": service,
             "lead_score": score,
             "priority": self.priority(score),
             "recommended_action": self.action(score)
         }
+
+        report = LeadReport()
+
+        generated_report = report.generate(analysis)
+
+        report.save(generated_report)
+
+        return analysis
 
 
     def detect_service(self, message):
@@ -47,18 +56,14 @@ class LeadAnalyzer:
 
         score = 50
 
-
         if "$" in budget:
             score += 20
-
 
         if "week" in deadline.lower():
             score += 15
 
-
         if service != "Unknown":
             score += 15
-
 
         return min(score, 100)
 
