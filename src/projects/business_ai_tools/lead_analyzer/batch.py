@@ -36,3 +36,15 @@ class BatchLeadAnalyzer:
             results.append(result)
 
         return results
+
+
+    def save_results(self, results, path):
+
+        with open(path, "w") as f:
+            json.dump(
+                results,
+                f,
+                indent=4
+            )
+
+        return path

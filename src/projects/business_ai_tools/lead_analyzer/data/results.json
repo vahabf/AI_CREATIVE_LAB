@@ -1,0 +1,16 @@
+[
+    {
+        "client": "Luxury Furniture Co",
+        "service": "3D Design",
+        "lead_score": 100,
+        "priority": "High",
+        "recommended_action": "Send proposal immediately"
+    },
+    {
+        "client": "AI Marketing Agency",
+        "service": "AI Automation",
+        "lead_score": 100,
+        "priority": "High",
+        "recommended_action": "Send proposal immediately"
+    }
+]
