@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Luxury Furniture Co",
+        "message": "Need a 3D product animation for our furniture catalog",
+        "budget": "$2000",
+        "deadline": "3 weeks"
+    },
+    {
+        "name": "AI Marketing Agency",
+        "message": "Need automation workflow for lead management",
+        "budget": "$1500",
+        "deadline": "2 weeks"
+    }
+]
